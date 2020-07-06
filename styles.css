@@ -1,0 +1,116 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #242333;
+  color: white;
+  flex-direction: column;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.movie-container {
+  padding: 2rem;
+  margin: 0.5rem;
+  font-size: 1.5rem;
+}
+
+.movie-container select {
+  padding: 5px;
+  border-radius: 10px;
+  font-size: 1.1rem;
+}
+
+.showcase {
+  background-color: rgba(0, 0, 0, 0.1);
+  color: #777;
+  padding: 5px 10px;
+  border-radius: 5px;
+  margin: 1rem;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+}
+
+.showcase li {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 10px;
+}
+
+.showcase small {
+  margin-left: 2px;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  perspective: 1000px;
+}
+
+.seat {
+  background: #444451;
+  height: 10px;
+  width: 15px;
+  margin: 3px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.seat.selected {
+  background-color: #6feaf6;
+}
+
+.seat.occupied {
+  background-color: white;
+}
+
+.seat:nth-of-type(2) {
+  margin-right: 1rem;
+}
+
+.seat:nth-last-of-type(2) {
+  margin-left: 1rem;
+}
+
+.seat:not(.occupied):hover {
+  cursor: pointer;
+  transform: scale(1.2);
+}
+
+.showcase .seat:not(.occupied):hover {
+  cursor: default;
+  transform: scale(1);
+}
+
+.screen {
+  background-color: white;
+  height: 70px;
+  width: 100%;
+  margin: 15px 0;
+  transform: rotateX(-45deg);
+  box-shadow: 0px 3px 10px rgba(255, 255, 255, 0.7);
+}
+
+.row {
+  display: flex;
+}
+
+.text {
+  padding: 1rem;
+  margin: 1.5rem;
+  font-size: 1.4rem;
+}
+
+#count,
+#total {
+  color: #6feaf6;
+}
