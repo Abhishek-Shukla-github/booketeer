@@ -114,3 +114,18 @@ body {
 #total {
   color: #6feaf6;
 }
+
+button {
+  font-size: 1.5rem;
+  color: aliceblue;
+  background-color: #202029;
+  padding: 1rem;
+  border: 1px solid;
+  border-radius: 1rem;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #242333;
+  box-shadow: 0px 3px 10px rgba(255, 255, 255, 0.7);
+}

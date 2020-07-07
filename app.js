@@ -4,7 +4,9 @@ const total = document.querySelector("#total");
 const seatCount = document.querySelector("#count");
 const container = document.querySelector(".container");
 let selectedSeats;
+selectedSeats = document.querySelectorAll(".row .seat.selected");
 let ticketPrice = parseInt(movieSelect.value);
+let btn = document.querySelector("button");
 
 populateUI();
 
@@ -17,6 +19,12 @@ const updateCount = () => {
   selectedSeats = document.querySelectorAll(".row .seat.selected");
   seatCount.innerText = selectedSeats.length;
   total.innerText = selectedSeats.length * ticketPrice;
+
+  //Payout Button visibility
+  if (selectedSeats.length > 0) {
+    console.log(selectedSeats.length);
+    btn.style.visibility = "visible";
+  } else btn.style.visibility = "hidden";
 
   const seatsIndex = [...selectedSeats].map((seat) => {
     return [...seats].indexOf(seat);
@@ -44,6 +52,11 @@ function populateUI() {
   if (selectedMovieIndex !== null) {
     movieSelect.selectedIndex = selectedMovieIndex;
   }
+  // if (selectedSeats.length > 0) {
+  //   console.log(selectedSeats.length);
+  //   btn.style.visibility = "visible";
+  // } else btn.style.visibility = "hidden";
+
   console.log("Populated" + selectedSeats);
 }
 
@@ -57,5 +70,4 @@ container.addEventListener("click", (e) => {
     updateCount();
   }
 });
-
 updateCount();
