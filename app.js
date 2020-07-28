@@ -1,73 +1,39 @@
-let movieSelect = document.querySelector("#movie");
-const seats = document.querySelectorAll(".row .seat:not(.occupied)");
-const total = document.querySelector("#total");
-const seatCount = document.querySelector("#count");
-const container = document.querySelector(".container");
-let selectedSeats;
-selectedSeats = document.querySelectorAll(".row .seat.selected");
-let ticketPrice = parseInt(movieSelect.value);
-let btn = document.querySelector("button");
+let express = require("express");
+let app = express();
+let mongoose = require("mongoose");
+app.set("view engine", "ejs");
+const jsdom = require("jsdom");
+const { JSDOM } = jsdom;
 
-populateUI();
-
-function setMovieData(movieIndex, moviePrice) {
-  localStorage.setItem("MovieName", movieIndex);
-  localStorage.setItem("MoviePrice", moviePrice);
-}
-
-const updateCount = () => {
-  selectedSeats = document.querySelectorAll(".row .seat.selected");
-  seatCount.innerText = selectedSeats.length;
-  total.innerText = selectedSeats.length * ticketPrice;
-
-  //Payout Button visibility
-  if (selectedSeats.length > 0) {
-    console.log(selectedSeats.length);
-    btn.style.visibility = "visible";
-  } else btn.style.visibility = "hidden";
-
-  const seatsIndex = [...selectedSeats].map((seat) => {
-    return [...seats].indexOf(seat);
-  });
-  localStorage.setItem("SelectedSeats", JSON.stringify(seatsIndex));
-  console.log(seatsIndex);
-};
-
-//Movie Select
-movieSelect.addEventListener("change", (e) => {
-  ticketPrice = parseInt(e.target.value);
-  setMovieData(e.target.selectedIndex, e.target.value);
-  updateCount();
+app.use(express.static("public"));
+//Mongoose modelling
+mongoose.connect("mongodb://localhost:27017/booketeer", {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
 });
 
-//Retrieving data from local storage and populating it on UI
-function populateUI() {
-  const selectedSeats = JSON.parse(localStorage.getItem("SelectedSeats"));
-  if (selectedSeats.length > 0 && selectedSeats !== null) {
-    selectedSeats.forEach((seat) => {
-      seats[seat].classList.toggle("selected");
-    });
-  }
-  const selectedMovieIndex = localStorage.getItem("MovieName");
-  if (selectedMovieIndex !== null) {
-    movieSelect.selectedIndex = selectedMovieIndex;
-  }
-  // if (selectedSeats.length > 0) {
-  //   console.log(selectedSeats.length);
-  //   btn.style.visibility = "visible";
-  // } else btn.style.visibility = "hidden";
-
-  console.log("Populated" + selectedSeats);
-}
-
-//Seat Select
-container.addEventListener("click", (e) => {
-  if (
-    e.target.classList.contains("seat") &&
-    !e.target.classList.contains("occupied")
-  ) {
-    e.target.classList.toggle("selected");
-    updateCount();
-  }
+let userSchema = new mongoose.Schema({
+  username: String,
+  age: Number,
+  password: String,
 });
-updateCount();
+
+let User = mongoose.model("User", userSchema);
+
+//Rest Routes
+app.get("/", (req, res) => {
+  res.render("landing");
+});
+
+app.get("/book", (req, res) => {
+  res.render("book");
+});
+
+//Signup form
+app.get("/register", (req, res) => {
+  res.send("Sign up form!");
+});
+
+app.listen(3000, (req, res) => {
+  console.log("Booketeer running on port 3000!");
+});
